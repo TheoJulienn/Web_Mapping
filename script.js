@@ -49,7 +49,7 @@ function loadOnMap(map){
 	data1 = new google.maps.Data();
 	
 	// Chargement GeoJSON
-  	data1.loadGeoJson('test.geojson');
+  	data1.loadGeoJson('hypotheses.geojson');
 
 
   
@@ -64,7 +64,7 @@ function loadOnMap(map){
 		
 		//on boucle sur la colonne "" pour remplir notre tableau
 		data1.forEach(function(feature) {
-			num = parseFloat(feature.getProperty("COMP_10"));			  		
+			num = parseFloat(feature.getProperty("HYPOTHESE"));			  		
 			tab.push(num);
 		});
 
@@ -75,16 +75,16 @@ function loadOnMap(map){
               mini.toLocaleString();
         document.getElementById('census-max').textContent =
               maxi.toLocaleString();
-        document.getElementById("donnees").textContent = "COMP_10";
+        document.getElementById("donnees").textContent = "HYPOTHESE";
 
 
   		//ajout des couleurs sur la carte
   		data1.setStyle(function(feature) {
-        	var low = [5, 69, 54];  // color of smallest datum
-        	var high = [151, 83, 34];   // color of largest datum
+        	var low = [151, 83, 34];  // color of smallest datum[151, 83, 34]
+        	var high = [5, 69, 54];   // color of largest datum[5, 69, 54]
 
         	// delta represente l'endroit ou se situe la valeur de compacité entre le min et le max
-        	var delta = (feature.getProperty('COMP_10') - mini) /
+        	var delta = (feature.getProperty('HYPOTHESE') - mini) /
             (maxi - mini);
 
         	var color = [];
@@ -100,7 +100,7 @@ function loadOnMap(map){
           	strokeColor: '#fff',
           	zIndex: zIndex,
           	fillColor: 'hsl(' + color[0] + ',' + color[1] + '%,' + color[2] + '%)',
-          	fillOpacity: 0.75,
+          	fillOpacity: 0.50,
           	visible: true
         	};
       	});
@@ -109,7 +109,7 @@ function loadOnMap(map){
 
 		//evenement qui met a jour la position du carré dans la légende
       	function mouseIn(e) {
-        	var percent = (e.feature.getProperty('COMP_10') - mini) /
+        	var percent = (e.feature.getProperty('HYPOTHESE') - mini) /
             (maxi - mini) * 100;
 
         	// deplacement du carré
