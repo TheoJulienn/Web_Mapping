@@ -4,7 +4,8 @@
 from qgis.PyQt.QtCore import QVariant
 import numpy as np
 import random
-
+import os
+import inspect
 
 
 #Variables
@@ -15,7 +16,7 @@ pr = layer.dataProvider()
 
 #definition des la zone où les carrés vont se former, en projection WGS84 (départ et arrivée)
 
-zone = np.array([(-2,30),(3,49  )])
+zone = np.array([(-18,35),(15,52)])
 
 #decoupage de cette zone carrée en sous carrée de longueur 1 degré
 
@@ -68,4 +69,5 @@ layer.commitChanges()
 
 layer.updateExtents()
 QgsMapLayerRegistry.instance().addMapLayers([layer])#ajout de la couche a la carte
-qgis.core.QgsVectorFileWriter.writeAsVectorFormat(layer,'D:/Cours/Web_Mapping/hypotheses.geojson', 'utf-8', layer.crs(), 'GeoJson')#enregistrement de la couche
+d = os.path.dirname(os.path.realpath(inspect.getframeinfo(inspect.currentframe()).filename))#emplacement du script
+qgis.core.QgsVectorFileWriter.writeAsVectorFormat(layer, d +'/GeoJson/hypotheses.geojson', 'utf-8', layer.crs(), 'GeoJson')#enregistrement de la couche
